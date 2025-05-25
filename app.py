@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from flask import Flask, render_template, request, redirect, url_for, session, make_response
-from flask_session import Session
 
 os.environ["FLASK_ENV"] = "production"
 os.environ["WERKZEUG_DEBUG_PIN"] = "564-678-923"
@@ -11,7 +10,6 @@ app.config['SESSION_COOKIE_NAME'] = 'session'
 app.session_cookie_name = app.config['SESSION_COOKIE_NAME']
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'supersecret')
 app.config['SESSION_TYPE'] = 'filesystem'
-Session(app)
 ADMIN_USER = 'admin'
 ADMIN_PASS = 'matrix'
 
@@ -35,7 +33,7 @@ def login():
             session['logged_in'] = True
             return redirect(url_for('admin'))
         else:
-            err = 'I said no one. But the hundredth most used... by the way I love that movie ;)'
+            err = 'Try again... Next hint - algebra nightmare'
     return render_template('login.html', error=err)
 
 
@@ -59,4 +57,3 @@ def secret_endpoint():
         response.set_cookie(k, v)
     return response
 
-app.run(host='127.0.0.1', port=6000, debug=True)
