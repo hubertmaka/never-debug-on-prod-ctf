@@ -2,9 +2,9 @@ import os
 from pathlib import Path
 from flask import Flask, render_template, request, redirect, url_for, session, make_response
 
-os.environ["FLASK_ENV"] = "production"
 os.environ["WERKZEUG_DEBUG_PIN"] = "564-678-923"
-os.environ["FLAG_PATH"] = f'{Path(__name__).parent / "secret" / "in-this-file-there-are-no-flags.txt"}' 
+os.environ["FLAG_PATH"] = f'{Path(__name__).parent / "secret" / "in-this-file-there-are-no-flags.txt"}'
+os.environ["FLASK_DEBUG"] = "1"
 app = Flask(__name__)
 app.config['SESSION_COOKIE_NAME'] = 'session'
 app.session_cookie_name = app.config['SESSION_COOKIE_NAME']
