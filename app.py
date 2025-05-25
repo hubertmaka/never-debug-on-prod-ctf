@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from flask import Flask, render_template, request, redirect, url_for, session, make_response
+from werkzeug.debug import DebuggedApplication
 
 os.environ["WERKZEUG_DEBUG_PIN"] = "564-678-923"
 os.environ["FLAG_PATH"] = f'{Path(__name__).parent / "secret" / "in-this-file-there-are-no-flags.txt"}'
@@ -12,6 +13,8 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'supersecret')
 app.config['SESSION_TYPE'] = 'filesystem'
 ADMIN_USER = 'admin'
 ADMIN_PASS = 'matrix'
+
+app.wsgi_app = DebuggedApplication(app.wsgi_app, evalex=True)
 
 @app.route('/')
 def index():
