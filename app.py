@@ -14,7 +14,11 @@ app.config['SESSION_TYPE'] = 'filesystem'
 ADMIN_USER = 'admin'
 ADMIN_PASS = 'matrix'
 
-app.wsgi_app = DebuggedApplication(app.wsgi_app, evalex=True)
+class DebuggedApplicationAllowAll(DebuggedApplication):
+    def check_host_trust(self, hostname: str) -> bool:
+        return True
+
+app.wsgi_app = DebuggedApplicationAllowAll(app.wsgi_app, evalex=True)
 
 @app.route('/')
 def index():
